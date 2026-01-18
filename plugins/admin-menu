@@ -30,7 +30,7 @@ const handler = async (message, { conn, usedPrefix = '.', command }) => {
     const extraMenu = `\n🏠 *MENU PRINCIPALE*
 
 *Founder* :
-➥ Vexper 💀
+➥ Vexper 
 
 ─────────────────────
 

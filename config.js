@@ -15,23 +15,23 @@ const moduleCache = new NodeCache({ stdTTL: 300 });
 
 global.sam = ['393476686131',]
 global.owner = [
-  ['393476686131', 'sam', true],
-  ['393511082922', 'gio', true],
-  ['393392645292', 'mavko', true],
-  ['67078163216', 'Felix', true],
-  ['393514357738', 'vare', true],
+  ['393924423690', 'vexper', true],
+  ['xxxxxxxxxxxx', 'gio', true],
+  ['xxxxxxxxxxxx', 'mavko', true],
+  ['xxxxxxxxxxxx', 'Felix', true],
+  ['xxxxxxxxxxxx', 'vare', true],
 ]
 global.mods = ['393476686131', '393511082922', '67078163216']
 global.prems = ['393476686131', '393511082922', '67078163216']
 
 /*⭑⭒━━━✦❘༻🩸 INFO BOT 🕊️༺❘✦━━━⭒⭑*/
 
-global.nomepack = 'vare ✧ bot'
-global.nomebot = '✧˚🩸 varebot 🕊️˚✧'
-global.wm = 'vare ✧ bot'
-global.autore = '𝐬𝐚𝐦'
-global.dev = '⋆｡˚- 𝐬𝐚𝐦'
-global.testobot = `༻⋆⁺₊𝓿𝓪𝓻𝓮𝓫𝓸𝓽₊⁺⋆༺`
+global.nomepack = '√乇ﾒ乃のｲ // 𝚅𝚎𝚡-𝙱𝚘𝚝'
+global.nomebot = '√乇ﾒ乃のｲ // 𝚅𝚎𝚡-𝙱𝚘𝚝'
+global.wm = 'ꪶ𝑉𝛴𝜲𝜬𝛴𝑅ꫂ'
+global.autore = 'ꪶ𝑉𝛴𝜲𝜬𝛴𝑅ꫂ'
+global.dev = 'ꪶ𝑉𝛴𝜲𝜬𝛴𝑅ꫂ'
+global.testobot = 'ꪶ𝑉𝛴𝜲𝜬𝛴𝑅ꫂ'
 global.versione = pkg.version
 global.errore = '⚠️ *Errore inatteso!* Usa il comando `.segnala _errore_` per avvisare lo sviluppatore.'
 

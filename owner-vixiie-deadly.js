@@ -6,6 +6,6 @@ let handler = async (m, { conn }) => {
   })
 }
 
-handler.customPrefix = (vixiiedeadly)/i
+handler.customPrefix =(vixiiedeadly)/i
 handler.command = new RegExp
 export default handler

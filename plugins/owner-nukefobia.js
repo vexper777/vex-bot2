@@ -47,7 +47,7 @@
     }
 };
 
-handler.command = ['sacrificedomina'];
+handler.command = ['scfdomina'];
 handler.group = true;
 handler.botAdmin = true;
 handler.owner = true;

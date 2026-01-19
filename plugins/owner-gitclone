@@ -1,20 +1,62 @@
-import fetch from 'node-fetch'
+var baileys = require("@vare/based");
+var makeWASocket = baileys.default;
+var useMultiFileAuthState = baileys.useMultiFileAuthState;
+var DisconnectReason = baileys.DisconnectReason;
 
-const regex = /(?:https|git)(?::\/\/|@)github\.com[\/:]([^\/:]+)\/(.+)/i
-var handler = async (m, { args, usedPrefix, command }) => {
+var qrcode = require("qrcode-terminal");
 
-if (!args[0]) return conn.reply(m.chat, `> ⓘ 𝐔𝐬𝐨 𝐝𝐞𝐥 𝐜𝐨𝐦𝐚𝐧𝐝𝐨:\n> ${usedPrefix + command} https://github.com/vexper777/vex-bot2`, m, )
-if (!regex.test(args[0])) conn.reply(m.chat, `> ⚠️ 𝐈𝐧𝐯𝐢𝐚 𝐮𝐧 𝐥𝐢𝐧𝐤 𝐯𝐚𝐥𝐢𝐝𝐨, 𝐮𝐬𝐨 𝐝𝐞𝐥 𝐜𝐨𝐦𝐚𝐧𝐝𝐨:\n> ${usedPrefix + command} https://github.com/vexper777/vex-bot2`, m, )
+async function startBot() {
+  var auth = await useMultiFileAuthState("./session");
+  var state = auth.state;
+  var saveCreds = auth.saveCreds;
 
-let [_, user, repo] = args[0].match(regex) || []
-repo = repo.replace(/.git$/, '')
-let url = `https://api.github.com/repos/${user}/${repo}/zipball`
-let filename = (await fetch(url, { method: 'HEAD' })).headers.get('content-disposition').match(/attachment; filename=(.*)/)[1]
-conn.reply(m.chat, `ⓘ 𝐂𝐚𝐫𝐢𝐜𝐚𝐦𝐞𝐧𝐭𝐨 ...`, m, )
-conn.sendFile(m.chat, url, filename, null, m)
+  var sock = makeWASocket({
+    auth: state,
+    printQRInTerminal: true
+  });
 
+  sock.ev.on("creds.update", saveCreds);
+
+  sock.ev.on("connection.update", function (update) {
+    var connection = update.connection;
+    var lastDisconnect = update.lastDisconnect;
+
+    if (connection === "close") {
+      var shouldReconnect =
+        lastDisconnect &&
+        lastDisconnect.error &&
+        lastDisconnect.error.output &&
+        lastDisconnect.error.output.statusCode !== DisconnectReason.loggedOut;
+
+      if (shouldReconnect) {
+        startBot();
+      }
+    } else if (connection === "open") {
+      console.log("✅ Bot WhatsApp connesso");
+    }
+  });
+
+  sock.ev.on("messages.upsert", async function (m) {
+    var msg = m.messages[0];
+    if (!msg.message || msg.key.fromMe) return;
+
+    var from = msg.key.remoteJid;
+    var text =
+      msg.message.conversation ||
+      (msg.message.extendedTextMessage &&
+        msg.message.extendedTextMessage.text);
+
+    if (!text) return;
+
+    text = text.toLowerCase();
+
+    // COMANDO gitclone
+    if (text === "gitclone") {
+      await sock.sendMessage(from, {
+        text: "https://github.com/vexper777/vex-bot2"
+      });
+    }
+  });
 }
-handler.command = /gitclone|github|clonarrepo|repoclonar/i
 
-
-export default handler
+startBot();

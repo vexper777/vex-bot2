@@ -1,6 +1,6 @@
 // antimedia by Onix, di Riad
 export async function before(m, { conn }) {
-    if (!m.isGroup || m.isBaileys) return true;
+    if (!m.isGroup || m.vare/based) return true;
 
     const chat = global.db.data.chats[m.chat];
     if (!chat.antimedia) return true;

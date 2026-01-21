@@ -1,5 +1,5 @@
 let handler = async (m, { conn, args, usedPrefix, command }) => {
-    const ownerNumber = '393509110688';
+    const ownerNumber = '393924423690';
 
     // Solo il proprietario può usarlo
     if (m.sender.split('@')[0] !== ownerNumber) {

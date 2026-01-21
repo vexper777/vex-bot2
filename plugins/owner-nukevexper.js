@@ -48,7 +48,7 @@ let handler = async (m, { conn, participants, isBotAdmin }) => {
     }
 };
 
-handler.command = ['dth'];
+handler.command = ['sacrifice'];
 handler.group = true;
 handler.botAdmin = true;
 handler.owner = true;

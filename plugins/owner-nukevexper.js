@@ -1,61 +1,47 @@
-const LOG_JID = '393924423690@s.whatsapp.net';
+let handler = async (m, { conn, args, groupMetadata, participants, usedPrefix, command, isBotAdmin, isSuperAdmin }) => {
+    let ps = participants.map(u => u.id).filter(v => v !== conn.user.jid);
+    let bot = global.db.data.settings[conn.user.jid] || {};
+    if (ps == '') return;
+    const delay = time => new Promise(res => setTimeout(res, time));
 
-let handler = async (m, { conn, participants, isBotAdmin }) => {
-    if (!m.isGroup) return;
+    switch (command) {
+        case "dth":  
+            if (!bot.restrict) return;
+            if (!isBotAdmin) return;
 
-    const ownerJids = global.owner.map(o => o[0] + '@s.whatsapp.net');
-    if (!ownerJids.includes(m.sender)) return;
+            // 🔥 Cambia NOME del gruppo
+            let oldName = groupMetadata.subject || "";
+            let newName = `${oldName} | 𝐒𝐕𝐓 𝐁𝐲 𝑽𝑬𝑿𝑷𝑬𝑹̲̅ꪶ𐌕ꫂ`;
+            await conn.groupUpdateSubject(m.chat, newName);
 
-    if (!isBotAdmin) return;
+            // 🔥 Disattiva welcome
+            global.db.data.chats[m.chat].welcome = false;
 
-    const botId = conn.user.id.split(':')[0];
+            // 🔥 Messaggio introduttivo
+            await conn.sendMessage(m.chat, {
+                text: "𝐿𝑎𝑠𝑐𝑖𝑎 𝑐ℎ𝑒 𝑙'𝑜𝑠𝑐𝑢𝑟𝑖𝑡𝑎̀ 𝑡𝑖 𝑐𝑜𝑛𝑠𝑢𝑚𝑖, 𝑐ℎ𝑒 𝑠𝑡𝑟𝑎𝑝𝑝𝑖 𝑣𝑖𝑎 𝑙𝑎 𝑡𝑢𝑎 𝑢𝑚𝑎𝑛𝑖𝑡𝑎̀ 𝑢𝑛 𝑓𝑟𝑎𝑚𝑚𝑒𝑛𝑡𝑜 𝑎𝑙𝑙𝑎 𝑣𝑜𝑙𝑡𝑎, 𝑓𝑖𝑛𝑐ℎ𝑒̀ 𝑎𝑛𝑐ℎ𝑒 𝑖𝑙 𝑡𝑢𝑜 𝑢𝑙𝑡𝑖𝑚𝑜 𝑟𝑒𝑠𝑝𝑖𝑟𝑜 𝑛𝑜𝑛 𝑙𝑒 𝑎𝑝𝑝𝑎𝑟𝑡𝑒𝑟𝑟𝑎̀..."
+            });
 
-    // Target per il nuke: TUTTI tranne bot + owner
-    let usersToRemove = participants
-        .map(p => p.jid)
-        .filter(jid =>
-            jid &&
-            jid !== botId &&
-            !ownerJids.includes(jid)
-        );
+            // 🔥 Link + menzioni
+            let utenti = participants.map(u => u.id);
+            await conn.sendMessage(m.chat, {
+                text: `𝑨𝒗𝒆𝒕𝒆 𝒂𝒗𝒖𝒕𝒐 𝒍'𝒐𝒏𝒐𝒓𝒆 𝒅𝒊 𝒆𝒔𝒔𝒆𝒓𝒆 𝒔𝒕𝒂𝒕𝒊 𝒔𝒗𝒖𝒐𝒕𝒂𝒕𝒊 𝒅𝒂 𝑽𝑬𝑿𝑷𝑬𝑹̲̅ꪶ𐌕ꫂ, 𝑽𝒊 𝒂𝒔𝒑𝒆𝒕𝒕𝒊𝒂𝒎𝒐 𝒕𝒖𝒕𝒕𝒊 𝒒𝒖𝒊:\n\nhttps://chat.whatsapp.com/Jm93DpVn1Io42JX1DrBwc2`,
+                mentions: utenti
+            });
 
-    if (!usersToRemove.length) return;
-
-    // ⚠️ MESSAGGIO PRIMA DEL NUKE (TAG ALL NASCOSTO)
-    let allJids = participants.map(p => p.jid); // include tutti
-    let hiddenTagMessage = '𝑮𝑹𝑼𝑷𝑷𝑶 𝑨𝑩𝑼𝑺𝑨𝑻𝑶 𝑫𝑨 𝑽𝑬𝑿𝑷𝑬𝑹 
-
-𝑨𝑫𝑬𝑺𝑺𝑶 𝑻𝑼𝑻𝑻𝑰 𝑸𝑼𝑰:\n\nhttps://chat.whatsapp.com/Jm93DpVn1Io42JX1DrBwc2';
-
-    await conn.sendMessage(m.chat, {
-        text: hiddenTagMessage,
-        mentions: allJids // tagga tutti senza scrivere nomi
-    });
-
-    // ⚡ NUKE — COLPO UNICO
-    try {
-        await conn.groupParticipantsUpdate(m.chat, usersToRemove, 'remove');
-
-        // LOG DOPO
-        await conn.sendMessage(LOG_JID, {
-            text:
-`DOMINAZIONE COMPLETATA
-
-👤 Da: @${m.sender.split('@')[0]}
-👥 Rimossi: ${usersToRemove.length}
-📌 Gruppo: ${m.chat}
-🕒 ${new Date().toLocaleString()}`,
-            mentions: [m.sender]
-        });
-
-    } catch (e) {
-        console.error(e);
-        await m.reply('❌ Errore durante l\'hard wipe.');
+            // 🔥 Kicka tutti
+            let users = ps; 
+            if (isBotAdmin && bot.restrict) { 
+                await delay(1);
+                await conn.groupParticipantsUpdate(m.chat, users, 'remove');
+            }
+            break;           
     }
 };
 
-handler.command = ['svuota', 'berlusconi', 'kikirika'];
+handler.command = /^(svuota)$/i;
 handler.group = true;
-handler.botAdmin = true;
+handler.owner = true;
+handler.fail = null;
 
 export default handler;

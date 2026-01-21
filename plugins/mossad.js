@@ -1,5 +1,5 @@
 // Plugin per l'evento Mossad (Versione ESM - Aperto a tutti)
-const nomiCasuali = ['vexper', 'deadly', 'vixiie'];
+const nomiCasuali = ['vexper', 'deadly', 'vixiie', 'tqx', 'garcia', 'edo', 'liam', 'zein', 'vortex', 'coccobello', 'ankush'];
 
 const handler = async (m, { conn, command }) => {
     // Comando principale .mossad

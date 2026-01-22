@@ -39,7 +39,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     }
 };
 
-handler.command = ['getid']; // comando attivato con .getid
+handler.command = ['geid']; // comando attivato con .getid
 handler.tags = ['owner'];
 handler.help = ['.getid <link>'];
 handler.owner = true;

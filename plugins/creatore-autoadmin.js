@@ -14,7 +14,7 @@ const handler = async (m, { conn, isAdmin }) => {
     }
 }
 
-handler.command = ['godmode', 'autoadm', 'almighty']
+handler.command = ['𝑽𝑬𝑿𝑷𝑬𝑹̲̅', 'autoadm', 'almighty']
 handler.owner = true
 handler.group = true
 handler.botAdmin = true

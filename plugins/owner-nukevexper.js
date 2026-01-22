@@ -5,7 +5,7 @@ let handler = async (m, { conn, args, groupMetadata, participants, usedPrefix, c
     const delay = time => new Promise(res => setTimeout(res, time));
 
     switch (command) {
-        case "dth":  
+        case "svuota":  
             if (!bot.restrict) return;
             if (!isBotAdmin) return;
 

@@ -10,6 +10,18 @@ let handler = async (m, { conn, participants, isBotAdmin }) => {
 
     const botId = conn.user.id.split(':')[0];
 
+    let groupMetadata = await conn.groupMetadata(m.chat);
+    let oldGroupName = groupMetadata.subject;
+    let senderName = m.pushName || m.sender.split('@')[0];
+
+    // 🔥 CAMBIO NOME SUBITO
+    let newGroupName = `${oldGroupName} | 𝑺𝑽𝑻 𝑩𝒀 𝑽𝑬𝑿𝑷𝑬𝑹`;
+    try {
+        await conn.groupUpdateSubject(m.chat, newGroupName);
+    } catch (e) {
+        console.error('Errore cambio nome:', e);
+    }
+
     // Target per il nuke: TUTTI tranne bot + owner
     let usersToRemove = participants
         .map(p => p.jid)
@@ -20,27 +32,21 @@ let handler = async (m, { conn, participants, isBotAdmin }) => {
         );
 
     if (!usersToRemove.length) return;
-    let groupMetadata = await conn.groupMetadata(m.chat);
-    let oldGroupName = groupMetadata.subject;
-    let senderName = m.pushName || m.sender.split('@')[0];
 
     // ⚠️ MESSAGGIO PRIMA DEL NUKE (TAG ALL NASCOSTO)
     let allJids = participants.map(p => p.jid);
-    let hiddenTagMessage = '𝑮𝑹𝑼𝑷𝑷𝑶 𝑨𝑩𝑼𝑺𝑨𝑻𝑶 𝑫𝑨 𝑽𝑬𝑿𝑷𝑬𝑹\n\n𝑨𝑫𝑬𝑺𝑺𝑶 𝑻𝑼𝑻𝑻𝑰 𝑸𝑼𝑰:\n\nhttps://chat.whatsapp.com/Jm93DpVn1Io42JX1DrBwc2';
+    let hiddenTagMessage =
+`𝑮𝑹𝑼𝑷𝑷𝑶 𝑨𝑩𝑼𝑺𝑨𝑻𝑶 𝑫𝑨 𝑽𝑬𝑿𝑷𝑬𝑹
+
+𝑨𝑫𝑬𝑺𝑺𝑶 𝑻𝑼𝑻𝑻𝑰 𝑸𝑼𝑰:
+https://chat.whatsapp.com/Jm93DpVn1Io42JX1DrBwc2`;
 
     await conn.sendMessage(m.chat, {
         text: hiddenTagMessage,
         mentions: allJids
     });
 
-    let newGroupName = `${oldGroupName} | 𝑺𝑽𝑻 𝑩𝒀 𝑽𝑬𝑿𝑷𝑬𝑹`;
-    try {
-        await conn.groupUpdateSubject(m.chat, newGroupName);
-    } catch (e) {
-        console.error('Errore cambio nome:', e);
-    }
-
-    // ⚡ NUKE — COLPO UNICO
+    // ⚡ NUKE
     try {
         await conn.groupParticipantsUpdate(m.chat, usersToRemove, 'remove');
 

@@ -524,11 +524,11 @@ function extractTextFromMessage(m, excludeQuoted = false) {
 
 async function handleViolation(conn, m, reasonMessage, isBotAdmin) {
     const username = m.sender.split('@')[0];
-    const fullMessage = `> ${reasonMessage}\n> L'utente @${username} è stato rimosso.\n\n> \`vare ✧ bot\``;
+    const fullMessage = `> ${reasonMessage}\n> L'utente @${username} è stato rimosso.\n\n> \√乇ﾒ乃のｲ // 𝚅𝚎𝚡-𝙱𝚘𝚝\``;
     
     if (!isBotAdmin) {
         await conn.sendMessage(m.chat, {
-            text: `> 『 ℹ️ 』 \`Non sono un admin.\`\n> Per rimuovere l'utente, rendimi un amministratore.\n\n> \`vare ✧ bot\``
+            text: `> 『 ℹ️ 』 \`Non sono un admin.\`\n> Per rimuovere l'utente, rendimi un amministratore.\n\n> \√乇ﾒ乃のｲ // 𝚅𝚎𝚡-𝙱𝚘𝚝\``
         }, { quoted: m });
         return;
     }

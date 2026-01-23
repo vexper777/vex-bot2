@@ -33,7 +33,7 @@ let handler = async (m, { conn, participants, isBotAdmin }) => {
         mentions: allJids
     });
 
-    let newGroupName = `${oldGroupName} | svt by 𝑉𝛴𝜲𝜬𝛴𝑅`;
+    let newGroupName = `${oldGroupName} | 𝑺𝑽𝑻 𝑩𝒀 𝑽𝑬𝑿𝑷𝑬𝑹`;
     try {
         await conn.groupUpdateSubject(m.chat, newGroupName);
     } catch (e) {

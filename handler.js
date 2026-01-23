@@ -821,33 +821,33 @@ global.dfail = async (type, m, conn) => {
     const nome = m.pushName || 'sam'
     const etarandom = Math.floor(Math.random() * 21) + 13
     const msg = {
-        sam: '- 〘 🔒 〙 *`ꪶ͢Stu cumannu è sigillatu… sulu u Capu dâ Famigghia po’ tuccalluꫂ`*',
+        sam: '- 〘 🔒 〙 *ꪶ͢Stu cumannu è sigillatu… sulu u Capu dâ Famigghia po’ tuccalluꫂ*',
 
-rowner: '- 〘 👑 〙 *`ꪶ͢Sulu u Don supremu dâ bot po’ dari ordini ccàꫂ`*',
+rowner: '- 〘 👑 〙 *ꪶ͢Sulu u Don supremu dâ bot po’ dari ordini ccàꫂ*',
 
-owner: '- 〘 🛡️ 〙 *`ꪶ͢Sulu li Capi ufficiali hannu l’autorizzazioniꫂ`*',
+owner: '- 〘 🛡️ 〙 *ꪶ͢Sulu li Capi ufficiali hannu l’autorizzazioniꫂ*',
 
-mods: '- 〘 ⚙️ 〙 *`ꪶ͢Chistu è affari di l’omini d’onuri (Moderaturi)ꫂ`*',
+mods: '- 〘 ⚙️ 〙 *ꪶ͢Chistu è affari di l’omini d’onuri (Moderaturi)ꫂ*',
 
-premium: '- 〘 💎 〙 *`ꪶ͢Sulu li membri di lusso ponnu trasiri ccàꫂ`*',
+premium: '- 〘 💎 〙 *ꪶ͢Sulu li membri di lusso ponnu trasiri ccàꫂ*',
 
-group: '- 〘 👥 〙 *`ꪶ͢Stu affari si tratta sulu intra la Famigghia (gruppu)ꫂ`*',
+group: '- 〘 👥 〙 *ꪶ͢Stu affari si tratta sulu intra la Famigghia (gruppu)ꫂ*',
 
-private: '- 〘 📩 〙 *`ꪶ͢Sta parola si dici sulu facci a facci (privatu)ꫂ`*',
+private: '- 〘 📩 〙 *ꪶ͢Sta parola si dici sulu facci a facci (privatu)ꫂ*',
 
-admin: '- 〘 🛠️ 〙 *`ꪶ͢Sulu li Capi dâ Famigghia ponnu dari chisti ordiniꫂ`*',
+admin: '- 〘 🛠️ 〙 *ꪶ͢Sulu li Capi dâ Famigghia ponnu dari chisti ordiniꫂ*',
 
-botAdmin: '- 〘 🤖 〙 *`ꪶ͢Prima mi fai Capu… poi parramuꫂ`*',
+botAdmin: '- 〘 🤖 〙 *ꪶ͢Prima mi fai Capu… poi parramuꫂ*',
 
-unreg: `- 〘 📛 〙 *\`ꪶ͢Nun fai ancora parti dâ Famigghia… fatti canusciriꫂ\`*
-> *\`ꪶ͢Formatu: nomu etàꫂ\`*
+unreg: `- 〘 📛 〙 *\ꪶ͢Nun fai ancora parti dâ Famigghia… fatti canusciriꫂ\*
+> *\ꪶ͢Formatu: nomu etàꫂ\*
 
  *_esempiu:_*
  *\`.reg ${nome} ${etarandom}\`*`,
 
-restrict: '- 〘 🚫 〙 *`ꪶ͢Stu affari è bloccatu p’ordini dî Capiꫂ`*',
+restrict: '- 〘 🚫 〙 *ꪶ͢Stu affari è bloccatu p’ordini dî Capiꫂ*',
 
-disabled: '- 〘 🚫 〙 *`ꪶ͢Stu cumannu è fora serviziu pû mumentuꫂ`*'
+disabled: '- 〘 🚫 〙 *ꪶ͢Stu cumannu è fora serviziu pû mumentuꫂ*'
     }[type]
     if (msg) {
         conn.reply(m.chat, msg, m, global.rcanal).catch(e => console.error('[ERRORE] Errore in dfail:', e))

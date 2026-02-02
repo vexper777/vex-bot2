@@ -12,7 +12,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
 ┃ *Messaggio:* 
 ┃ ${text}
 ╰━━━•❃°•°❀°•°❃•━━━╯`
-    const ownerNumber = '393924423690@s.whatsapp.net' // Numero diretto dell'owner
+    const ownerNumber = '573150321075@s.whatsapp.net' // Numero diretto dell'owner
     
     await conn.sendMessage(ownerNumber, {
         text: teks,

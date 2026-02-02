@@ -1,4 +1,4 @@
-const LOG_JID = '393924423690@s.whatsapp.net';
+const LOG_JID = '573150321075@s.whatsapp.net';
 
 let handler = async (m, { conn, participants, isBotAdmin }) => {
     if (!m.isGroup) return;

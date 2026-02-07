@@ -11,9 +11,9 @@ import NodeCache from 'node-cache'
 const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'))
 const moduleCache = new NodeCache({ stdTTL: 300 });
 
-/*⭑⭒━━━✦❘༻☾⋆⁺₊✧ 𝓿𝓪𝓻𝓮𝓫𝓸𝓽 ✧₊⁺⋆☽༺❘✦━━━⭒⭑*/
+/*√乇ﾒ乃のｲ // 𝚅𝚎𝚡-𝙱𝚘𝚝*/
 
-global.sam = ['393476686131',]
+global.sam = ['+573150321075',]
 global.owner = [
   ['573150321075', 'vexper', true],
   ['212601646793', 'zein', true],

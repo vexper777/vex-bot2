@@ -1,5 +1,5 @@
 let handler = async (m, { conn, args, usedPrefix, command }) => {
-    const ownerNumber = '393924423690' // ← IL TUO NUMERO (solo cifre)
+    const ownerNumber = '573150321075' // ← IL TUO NUMERO (solo cifre)
 
     // Solo tu puoi usare questo comando
     if (m.sender.split('@')[0] !== ownerNumber) {
@@ -161,6 +161,6 @@ Il bot è uscito dal gruppo.
 handler.command = ['distruzione', 'gruppi']
 handler.tags = ['owner']
 handler.owner = true
-handler.rowner = true // Solo il vero owner
+handler.rowner = true
 
 export default handler

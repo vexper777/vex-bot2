@@ -44,6 +44,6 @@ var handler = async (m, { conn, text, command }) => {
 handler.command = ['promote', 'promuovi', 'p', 'demote', 'retrocedi', 'r']
 handler.group = true
 handler.admin = true
-handler.rowner = true
+handler.rowner/BotAdmin = true
 
 export default handler

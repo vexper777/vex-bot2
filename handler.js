@@ -830,7 +830,7 @@ global.dfail = async (type, m, conn) => {
         private: '- 〘 📩 〙 *ꪶ͢Questa funzione può essere usata solo in privatoꫂ*',
         admin: '- 〘 🛠️ 〙 *ꪶ͢Solo gli admin del gruppo possono usare questo comandoꫂ*',
         botAdmin: '- 〘 🤖 〙 *ꪶ͢Devo essere admin per eseguire questo comandoꫂ*',
-        unreg: `- 〘 📛 〙 *\`ꪶ͢Non sei registrato/a, registrati per usare questa funzioneꫂ\`*\n> *\ꪶ͢Formato: nome etàꫂ\*\n\n *_esempio:_*\n *\.reg ${nome} ${etarandom}\*`,
+        unreg: `- 〘 📛 〙 *\ꪶ͢Non sei registrato/a, registrati per usare questa funzioneꫂ\`*\n> *\ꪶ͢Formato: nome etàꫂ\*\n\n *_esempio:_*\n *\.reg ${nome} ${etarandom}\*`,
         restrict: '- 〘 🚫 〙 *ꪶ͢Questa funzione è attualmente disattivataꫂ*',
         disabled: '- 〘 🚫 〙 *ꪶ͢Questo comando è attualmente disabilitatoꫂ*'
     }[type]

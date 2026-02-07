@@ -1,113 +1,65 @@
-const handler = async (m, { conn, text, participants, isAdmin, isOwner }) => {
+import fetch from 'node-fetch'
+
+const handler = async (m, { conn }) => {
+  let who;
+  if (m.isGroup)
+    who = m.mentionedJid[0] || (m.quoted ? m.quoted.sender : null);
+  else who = m.chat;
+
+  if (!who)
+    return m.reply('⚠️ Tagga l’utente a cui vuoi rimuovere il *MODERATORE*.');
+
+  const user = global.db.data.users[who];
+  if (!user)
+    return m.reply('❌ Questo utente non è presente nel database.');
+
+  if (!user.premium)
+    return m.reply('ℹ️ Questo utente non è un MODERATORE.');
+
+  // Rimuove moderatore
+  user.premium = false;
+  user.premiumTime = 0;
+
+  // Foto profilo → thumbnail
+  let thumb;
   try {
-    const user = global.db.data.users[m.sender] || {}
-
-    // 🔐 Permessi: owner OR admin OR premium/mod
-    if (!isOwner && !isAdmin && !user.premium) {
-      return m.reply('⛔ *Questo comando è riservato ai MOD / PREMIUM*');
-    }
-
-    const users = participants.map(u => conn.decodeJid(u.id));
-
-    if (m.quoted) {
-      const quoted = m.quoted;
-
-      if (quoted.mtype === 'imageMessage') {
-        const media = await quoted.download();
-        await conn.sendMessage(
-          m.chat,
-          {
-            image: media,
-            caption: text || quoted.text || '',
-            mentions: users
-          },
-          { quoted: m }
-        );
-
-      } else if (quoted.mtype === 'videoMessage') {
-        const media = await quoted.download();
-        await conn.sendMessage(
-          m.chat,
-          {
-            video: media,
-            caption: text || quoted.text || '',
-            mentions: users
-          },
-          { quoted: m }
-        );
-
-      } else if (quoted.mtype === 'audioMessage') {
-        const media = await quoted.download();
-        await conn.sendMessage(
-          m.chat,
-          {
-            audio: media,
-            mimetype: 'audio/mp4',
-            mentions: users
-          },
-          { quoted: m }
-        );
-
-      } else if (quoted.mtype === 'documentMessage') {
-        const media = await quoted.download();
-        await conn.sendMessage(
-          m.chat,
-          {
-            document: media,
-            mimetype: quoted.mimetype,
-            fileName: quoted.fileName,
-            caption: text || quoted.text || '',
-            mentions: users
-          },
-          { quoted: m }
-        );
-
-      } else if (quoted.mtype === 'stickerMessage') {
-        const media = await quoted.download();
-        await conn.sendMessage(
-          m.chat,
-          {
-            sticker: media,
-            mentions: users
-          },
-          { quoted: m }
-        );
-
-      } else {
-        await conn.sendMessage(
-          m.chat,
-          {
-            text: quoted.text || text || '',
-            mentions: users
-          },
-          { quoted: m }
-        );
-      }
-
-    } else if (text) {
-      await conn.sendMessage(
-        m.chat,
-        {
-          text,
-          mentions: users
-        },
-        { quoted: m }
-      );
-
-    } else {
-      return m.reply('❌ Inserisci un testo o rispondi a un messaggio/media.');
-    }
-
-  } catch (e) {
-    console.error('Errore tagmod:', e);
-    m.reply('❌ Si è verificato un errore durante il tag.');
+    const ppUrl = await conn.profilePictureUrl(who, 'image');
+    const res = await fetch(ppUrl);
+    thumb = await res.buffer();
+  } catch {
+    const res = await fetch('https://i.ibb.co/3Fh9V6p/avatar-contact.png');
+    thumb = await res.buffer();
   }
+
+  const name = '@' + who.split('@')[0];
+
+  const caption = `
+🚫 *MODERATORE RIMOSSO* 🚫
+
+👤 Utente: ${name}
+🛡️ Stato: *DISATTIVATO*
+🔒 Accesso da moderatore revocato
+
+⚠️ I privilegi di moderatore sono stati rimossi.
+`.trim();
+
+  await conn.sendMessage(
+    m.chat,
+    {
+      text: caption,
+      mentions: [who],
+      contextInfo: {
+        jpegThumbnail: thumb
+      }
+    },
+    { quoted: m }
+  );
 };
 
-handler.help = ['tagmod'];
-handler.tags = ['gruppo', 'moderazione'];
-handler.command = /^tagmod$/i;
+handler.help = ['delmod @user'];
+handler.tags = ['owner'];
+handler.command = ['delmod'];
 handler.group = true;
-handler.premium = false
+handler.owner = true;
 
 export default handler;

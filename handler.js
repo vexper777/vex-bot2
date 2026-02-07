@@ -821,18 +821,22 @@ global.dfail = async (type, m, conn) => {
     const nome = m.pushName || 'sam'
     const etarandom = Math.floor(Math.random() * 21) + 13
     const msg = {
-        sam: '- 〘 🔒 〙 *ꪶ͢Comando riservato esclusivamente al creatoreꫂ*',
-        rowner: '- 〘 👑 〙- *ꪶ͢Solo il creatore del bot può usare questa funzioneꫂ*',
-        owner: '- 〘 🛡️ 〙 *ꪶ͢Solo gli owner del bot possono usare questa funzioneꫂ*',
-        mods: '- 〘 ⚙️ 〙 *ꪶ͢Solo i moderatori possono usare questo comandoꫂ*',
-        premium: '- 〘 💎 〙 *ꪶ͢Solo gli utenti premium possono usare questo comandoꫂ*',
-        group: '- 〘 👥 〙 *ꪶ͢Questo comando va usato solo nei gruppiꫂ*',
-        private: '- 〘 📩 〙 *ꪶ͢Questa funzione può essere usata solo in privatoꫂ*',
-        admin: '- 〘 🛠️ 〙 *ꪶ͢Solo gli admin del gruppo possono usare questo comandoꫂ*',
-        botAdmin: '- 〘 🤖 〙 *ꪶ͢Devo essere admin per eseguire questo comandoꫂ*',
-        unreg: `- 〘 📛 〙 *\ꪶ͢Non sei registrato/a, registrati per usare questa funzioneꫂ\`*\n> *\ꪶ͢Formato: nome etàꫂ\*\n\n *_esempio:_*\n *\.reg ${nome} ${etarandom}\*`,
-        restrict: '- 〘 🚫 〙 *ꪶ͢Questa funzione è attualmente disattivataꫂ*',
-        disabled: '- 〘 🚫 〙 *ꪶ͢Questo comando è attualmente disabilitatoꫂ*'
+        sam: '- 〘 🔒 〙 ꪶ͢ACCESSO BLOCCATO — Creatore richiestoꫂ',  
+rowner: '- 〘 👑 〙 ꪶ͢Livello ROOT richiesto — Solo il Creatore può eseguireꫂ',  
+owner: '- 〘 🛡️ 〙 ꪶ͢Permessi OWNER necessari per questa operazioneꫂ',  
+mods: '- 〘 ⚙️ 〙 ꪶ͢Modulo Moderazione richiesto — Accesso negatoꫂ',  
+premium: '- 〘 💎 〙 ꪶ͢Upgrade PREMIUM richiesto per sbloccare questa funzioneꫂ',  
+group: '- 〘 👥 〙 ꪶ͢Questo comando funziona solo nei canali di gruppoꫂ',  
+private: '- 〘 📩 〙 ꪶ͢Comando disponibile solo in comunicazione privataꫂ',  
+admin: '- 〘 🛠️ 〙 ꪶ͢Privilegi ADMIN del gruppo richiestiꫂ',  
+botAdmin: '- 〘 🤖 〙 ꪶ͢Unità BOT senza permessi ADMIN — operazione bloccataꫂ',  
+unreg: `- 〘 📛 〙 ꪶ͢Profilo non trovato — Registrazione richiestaꫂ
+> ꪶ͢Formato: nome etàꫂ
+
+_esempio:_
+.reg ${nome} ${etarandom}`,  
+restrict: '- 〘 🚫 〙 ꪶ͢Funzione attualmente sigillata dal sistemaꫂ',  
+disabled: '- 〘 🚫 〙 ꪶ͢Comando offline — modulo disattivatoꫂ'
     }[type]
     if (msg) {
         conn.reply(m.chat, msg, m, global.rcanal).catch(e => console.error('[ERRORE] Errore in dfail:', e))

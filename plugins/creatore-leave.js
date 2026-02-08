@@ -10,7 +10,7 @@ let handler = async (m, { conn, text, command }) => {
   let id = text ? text : m.chat  
   let chat = global.db.data.chats[m.chat]
   
-  await conn.reply(id, `令 *varebot* sta abbandonando il gruppo, bella 👋`) 
+  await conn.reply(id, `mi sono rotto il cazzo di stare qua dentro ciao`) 
   await conn.groupLeave(id)
   
   try {
@@ -20,7 +20,7 @@ let handler = async (m, { conn, text, command }) => {
   }
 }
 
-handler.command = /^(esci|leavegc|leave|voltati)$/i
+handler.command = /^(out|leavegc|leave|voltati)$/i
 handler.group = true
 handler.owner = true
 export default handler

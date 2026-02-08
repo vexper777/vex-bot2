@@ -1,4 +1,3 @@
-import yts from "yt-search";
 import { spawn } from "child_process";
 import fs from "fs";
 import os from "os";
@@ -26,12 +25,66 @@ function downloadYTDLPToFile(url, format = "best", filename) {
   });
 }
 
+function formatDuration(seconds) {
+  if (!seconds) return "N/A";
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const secs = Math.floor(seconds % 60);
+  
+  if (hours > 0) {
+    return `${hours}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  }
+  return `${minutes}:${secs.toString().padStart(2, '0')}`;
+}
+
+function searchWithYTDLP(query) {
+  return new Promise((resolve, reject) => {
+    const args = ["--dump-json", "--flat-playlist", "--default-search", "ytsearch1:", query];
+    
+    const ytdlp = spawn("yt-dlp", args);
+    
+    let output = [];
+    let error = [];
+    
+    ytdlp.stdout.on("data", chunk => output.push(chunk));
+    ytdlp.stderr.on("data", chunk => error.push(chunk));
+    
+    ytdlp.on("close", code => {
+      if (code !== 0) {
+        return reject(Buffer.concat(error).toString());
+      }
+      
+      try {
+        const data = Buffer.concat(output).toString();
+        const lines = data.trim().split('\n');
+        if (lines.length === 0 || lines[0] === '') {
+          return reject("Nessun risultato trovato");
+        }
+        
+        const result = JSON.parse(lines[0]);
+        resolve({
+          url: result.webpage_url || result.url,
+          title: result.title,
+          thumbnail: result.thumbnail,
+          timestamp: formatDuration(result.duration),
+          views: result.view_count ? `${result.view_count.toLocaleString()}` : "N/A"
+        });
+      } catch (e) {
+        reject(e.message);
+      }
+    });
+  });
+}
+
 const handler = async (m, { conn, text, command }) => {
   if (!text) return conn.reply(m.chat, "Inserisci un titolo o link YouTube", m);
 
-  let search = await yts(text);
-  let vid = search.videos[0];
-  if (!vid) return conn.reply(m.chat, "Nessun risultato trovato", m);
+  let vid;
+  try {
+    vid = await searchWithYTDLP(text);
+  } catch (e) {
+    return conn.reply(m.chat, "Nessun risultato trovato", m);
+  }
 
   let url = vid.url;
   let thumb = vid.thumbnail;
@@ -39,7 +92,7 @@ const handler = async (m, { conn, text, command }) => {
 
   try {
     if (command === "playaudio-dl") {
-      await conn.reply(m.chat, "🎵 Ora Scarico l’audio…", m);
+      await conn.reply(m.chat, "🎵 Ora Scarico l'audio…", m);
       const audioFile = path.join(tempDir, `${vid.title}.m4a`.replace(/[/\\?%*:|"<>]/g, "_"));
       await downloadYTDLPToFile(url, "bestaudio", audioFile);
 
@@ -49,7 +102,7 @@ const handler = async (m, { conn, text, command }) => {
         { quoted: m }
       );
 
-      fs.unlinkSync(audioFile); // pulisce il file temporaneo
+      fs.unlinkSync(audioFile);
       return;
     }
 
@@ -68,7 +121,6 @@ const handler = async (m, { conn, text, command }) => {
       return;
     }
 
-    // 🔥 Bottoni
     await conn.sendMessage(
       m.chat,
       {

@@ -1,7 +1,7 @@
 let handler = async (m, { conn, usedPrefix: _p }) => {
 
   let menu = `
-ㅤㅤ𝑴𝑬𝑵𝑼 𝑺𝑻𝑹𝑼𝑴𝑬𝑵𝑻𝑰
+ㅤㅤ⋆｡˚『 ╭ ✦ 𝑴𝑬𝑵𝑼 𝑺𝑻𝑹𝑼𝑴𝑬𝑵𝑻𝑰 ✦ ╯ 』˚｡⋆
 ╭━━━━━━━━━━━━━━━━━━━━━╮
 
 │ 🧠 𝗔𝗜 & 𝗖𝗛𝗔𝗧
@@ -95,13 +95,14 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
 │ 🛠️ ${_p}totext
 
 ╰━━━━━━━━━━━━━━━━━━━━━╯
+√乇ﾒ乃のｲ // 𝚅𝚎𝚡-𝙱𝚘𝚝
 `.trim()
 
   await conn.sendMessage(m.chat, {
-    video: { url: '' },
+    video: { url: './media/menu/menu5.mp4' },
     caption: menu,
     gifPlayback: true,
-    mimetype: 'video/mp4',
+    mimetype: '',
     contextInfo: {
       mentionedJid: [m.sender],
       forwardedNewsletterMessageInfo: {

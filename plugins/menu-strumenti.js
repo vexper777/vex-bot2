@@ -98,7 +98,7 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
 `.trim()
 
   await conn.sendMessage(m.chat, {
-    video: { url: './media/menu/menu5.mp4' },
+    video: { url: '' },
     caption: menu,
     gifPlayback: true,
     mimetype: 'video/mp4',

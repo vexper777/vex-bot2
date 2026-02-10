@@ -51,7 +51,6 @@ let handler = async (m, { conn, usedPrefix }) => {
   }))
 
   let text = `
-🤖 √乇ﾒ乃のｲ // 𝚅𝚎𝚡-𝙱𝚘𝚝
 │ 👤 Utente: *${name}*
 │ ⏱ Attivo: *${uptime}*
 │ 👥 Utenti: *${totalreg}*

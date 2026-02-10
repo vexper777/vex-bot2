@@ -99,10 +99,7 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
 `.trim()
 
   await conn.sendMessage(m.chat, {
-    video: { url: '. ' },
-    caption: menu,
-    gifPlayback: true,
-    mimetype: '.',
+    text: menu,
     contextInfo: {
       mentionedJid: [m.sender],
       forwardedNewsletterMessageInfo: {

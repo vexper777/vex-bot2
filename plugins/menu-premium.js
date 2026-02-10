@@ -1,7 +1,7 @@
 let handler = async (m, { conn }) => {
   try {
     const menuPremium = `
-╭━━━『 √乇ﾒ乃のｲ // 𝚅𝚎𝚡-𝙱𝚘𝚝 』━━━
+『 √乇ﾒ乃のｲ // 𝚅𝚎𝚡-𝙱𝚘𝚝 』
 ┃ 💎 .creamail — Genera una mail premium
 ┃ 💎 .mail [ID] — Controlla una mail
 ┃ 💎 .resetmail — Resetta la tua mail
@@ -10,8 +10,7 @@ let handler = async (m, { conn }) => {
 ┃ 💎 .mistral (testo/media) — AI avanzata Mistral
 ┃ 💎 .nova (testo/media) — AI avanzata Nova
 ┃
-╰━━━⸙⋆⸙⋆⸙━━━
-🩸 √乇ﾒ乃のｲ // 𝚅𝚎𝚡-𝙱𝚘𝚝
+╰ 🩸 √乇ﾒ乃のｲ // 𝚅𝚎𝚡-𝙱𝚘𝚝
 `.trim()
 
     // Invia il menù come semplice messaggio di testo

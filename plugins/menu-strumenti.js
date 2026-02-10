@@ -94,8 +94,7 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
 │ 🛠️ ${_p}trascrivi
 │ 🛠️ ${_p}totext
 
-╰━━━━━━━━━━━━━━━━━━━━━╯
-`.trim()
+╰━━━━━━━━━━━━━━━━━━━━━╯`.trim()
 
   await conn.sendMessage(m.chat, {
     video: { url: '' },

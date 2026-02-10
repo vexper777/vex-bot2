@@ -3,7 +3,6 @@ import { join } from 'path'
 import { xpRange } from '../lib/levelling.js'
 import moment from 'moment-timezone'
 import os from 'os'
-import fs from 'fs'
 
 const defaultMenu = {
   before: `MENU - DOWNLOAD
@@ -13,7 +12,7 @@ const defaultMenu = {
   header: 'Opzioni di Download:\n',
   body: '- %cmd',
   footer: '',
-  after: '\n> Bot by: √乇ﾒ乃のｲ // 𝚅𝚎𝚡-𝙱𝚘𝚝',
+  after: '\n> Bot by:√乇ﾒ乃のｲ // 𝚅𝚎𝚡-𝙱𝚘𝚝',
 }
 
 let handler = async (m, { conn, usedPrefix: _p, __dirname, args, command }) => {
@@ -93,9 +92,7 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname, args, command }) => {
       ...Object.keys(tags).map(tag => {
         return header.replace(/%category/g, tags[tag]) + '\n' + [
           ...help.filter(menu => menu.tags && menu.tags.includes(tag) && menu.help).map(menu => {
-            return menu.help.map(help => {
-              return body.replace(/%cmd/g, menu.prefix ? help : '%_p' + help)
-            }).join('\n')
+            return menu.help.map(help => body.replace(/%cmd/g, menu.prefix ? help : '%_p' + help)).join('\n')
           }),
           footer
         ].join('\n')
@@ -119,36 +116,9 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname, args, command }) => {
 
     text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a,b)=>b.length-a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
 
-    let fkon = {
-      key: {
-        fromMe: false,
-        participant: `${m.sender.split`@`[0]}@s.whatsapp.net`,
-        ...(m.chat ? { remoteJid: '393514357738@s.whatsapp.net' } : {})
-      },
-      message: {
-        contactMessage: {
-          displayName: `${name}`,
-          vcard: `BEGIN:VCARD\nVERSION:3.0\nN:;a,;;;\nFN:${name}\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD`
-        }
-      }
-    }
-
+    // Manda solo testo
     await m.react('⬇️')
-
-    conn.sendMessage(m.chat, {
-      video: fs.readFileSync('./media/menu/menu8.mp4'),
-      caption: text.trim(),
-      gifPlayback: true,
-      ...fake,
-      contextInfo: {
-        ...fake.contextInfo,
-        mentionedJid: [m.sender],
-        forwardedNewsletterMessageInfo: {
-          ...fake.contextInfo.forwardedNewsletterMessageInfo,
-          newsletterName: "ᰔᩚ . ˚ Menu Download ☆˒˒"
-        }
-      }
-    }, { quoted: m })
+    conn.sendMessage(m.chat, { text: text.trim(), contextInfo: { mentionedJid: [m.sender] } }, { quoted: m })
 
   } catch (e) {
     console.error(e)

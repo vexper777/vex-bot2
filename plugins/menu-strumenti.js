@@ -1,7 +1,7 @@
 let handler = async (m, { conn, usedPrefix: _p }) => {
 
   let menu = `
-ㅤㅤ⋆｡˚『 ╭ ✦ 𝑴𝑬𝑵𝑼 𝑺𝑻𝑹𝑼𝑴𝑬𝑵𝑻𝑰 ✦ ╯ 』˚｡⋆
+ㅤ𝑴𝑬𝑵𝑼 𝑺𝑻𝑹𝑼𝑴𝑬𝑵𝑻𝑰 
 ╭━━━━━━━━━━━━━━━━━━━━━╮
 
 │ 🧠 𝗔𝗜 & 𝗖𝗛𝗔𝗧
@@ -99,7 +99,7 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
 `.trim()
 
   await conn.sendMessage(m.chat, {
-    video: { url: './media/menu/menu5.mp4' },
+    video: { url: '' },
     caption: menu,
     gifPlayback: true,
     mimetype: '',

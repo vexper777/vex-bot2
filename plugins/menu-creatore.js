@@ -1,5 +1,7 @@
+import moment from 'moment-timezone'
+
 const defaultMenu = {
-  before: ``.trimStart(),
+  before: ``,
 
   header: `
 ╔══════════════════════════════╗
@@ -67,7 +69,6 @@ const defaultMenu = {
 `.trim(),
 
   body: ``,
-
   footer: ``,
 
   after: `
@@ -76,3 +77,25 @@ const defaultMenu = {
 ╚══════════════════════════════╝
 `.trim()
 }
+
+let handler = async (m, { conn, usedPrefix: _p }) => {
+  try {
+    let text = defaultMenu.header + "\n" + defaultMenu.after
+    text = text.replace(/%_p/g, _p)
+
+    await m.react('🕊️')
+    await conn.sendMessage(m.chat, {
+      text: text
+    }, { quoted: m })
+
+  } catch (e) {
+    console.error(e)
+    conn.reply(m.chat, 'Errore nel menu creatore', m)
+  }
+}
+
+handler.help = ['menucreatore']
+handler.tags = ['menu']
+handler.command = ['menuowner', 'menucreatore']
+
+export default handler

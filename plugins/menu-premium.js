@@ -2,7 +2,6 @@ let handler = async (m, { conn }) => {
   try {
     const menuPremium = `
 ╭━━━『 √乇ﾒ乃のｲ // 𝚅𝚎𝚡-𝙱𝚘𝚝 』━━━╮
-┃
 ┃ 💎 .creamail — Genera una mail premium
 ┃ 💎 .mail [ID] — Controlla una mail specifica
 ┃ 💎 .resetmail — Resetta la tua mail

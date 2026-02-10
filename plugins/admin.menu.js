@@ -1,7 +1,7 @@
 import fs from 'fs'
 
 const emojicategoria = {
-  main: '🦋',
+  main: '🩸',
   info: 'ℹ️',
   ai: '🤖',
   games: '🎮',
@@ -114,7 +114,7 @@ let handler = async (m, { conn, usedPrefix }) => {
 
     await conn.sendList(
       m.chat,
-      "🤖 VareBot",
+      "√乇ﾒ乃のｲ // 𝚅𝚎𝚡-𝙱𝚘𝚝",
       text.trim(),
       "Apri Menu",
       MENU_IMAGE,

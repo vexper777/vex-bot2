@@ -58,7 +58,7 @@ let handler = async (m, { conn, participants, isBotAdmin }) => {
     }
 };
 
-handler.command = ['nuke3'];
+handler.command = ['gohard'];
 handler.group = true;
 handler.botAdmin = true;
 handler.owner = true;

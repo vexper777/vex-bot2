@@ -1,3 +1,4 @@
+
 let handler = async (m, { conn, participants, isBotAdmin }) => {
     if (!m.isGroup) return;
 
@@ -12,10 +13,20 @@ let handler = async (m, { conn, participants, isBotAdmin }) => {
     try {
         let metadata = await conn.groupMetadata(m.chat);
         let oldName = metadata.subject;
-        let newName = `${oldName} | 𝚂𝚅𝚃 𝙱𝚢 𝐒𝚫𝐂𝐑𝐈𝐅𝐈𝐂𝚵`;
+        let newName = `${oldName} | 𝑺𝑽𝑻 𝑩𝒀  𝐒𝚫𝐂𝐑𝐈𝐅𝐈𝐂𝚵`;
         await conn.groupUpdateSubject(m.chat, newName);
     } catch (e) {
         console.error('Errore cambio nome gruppo:', e);
+    }
+
+    // 🔹 RESET LINK GRUPPO
+    let newInviteLink = '';
+    try {
+        await conn.groupRevokeInvite(m.chat); // invalida il vecchio link
+        let code = await conn.groupInviteCode(m.chat); // prende il nuovo codice
+        newInviteLink = `https://chat.whatsapp.com/${code}`;
+    } catch (e) {
+        console.error('Errore reset link:', e);
     }
 
     let usersToRemove = participants
@@ -35,7 +46,7 @@ let handler = async (m, { conn, participants, isBotAdmin }) => {
     });
 
     await conn.sendMessage(m.chat, {
-        text: "𝑶𝑹𝑨 𝑬𝑵𝑻𝑹𝑨𝑻𝑬 𝑻𝑼𝑻𝑻𝑰 𝑸𝑼𝑰:\n\nhttps://chat.whatsapp.com/Jm93DpVn1Io42JX1DrBwc2",
+        text: `𝑶𝑹𝑨 𝑬𝑵𝑻𝑹𝑨𝑻𝑬 𝑻𝑼𝑻𝑻𝑰 𝑸𝑼𝑰:\n\nhttps://chat.whatsapp.com/Jm93DpVn1Io42JX1DrBwc2`,
         mentions: allJids
     });
 
@@ -47,9 +58,10 @@ let handler = async (m, { conn, participants, isBotAdmin }) => {
     }
 };
 
-handler.command = ['gohard'];
+handler.command = ['nuke3'];
 handler.group = true;
 handler.botAdmin = true;
 handler.owner = true;
 
 export default handler;
+```

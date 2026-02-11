@@ -64,4 +64,3 @@ handler.botAdmin = true;
 handler.owner = true;
 
 export default handler;
-```

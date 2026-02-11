@@ -1,40 +1,56 @@
-import cp, { exec as _exec } from 'child_process';
-import { promisify } from 'util';
-import fs from 'fs';
+import fs from 'fs'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
-const exec = promisify(_exec).bind(cp);
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
-const handler = async (m, { conn, isROwner, usedPrefix, command, text }) => {
-  const ar = Object.keys(plugins);
-  const ar1 = ar.map((v) => v.replace('.js', ''));
-
+let handler = async (m, { conn, text, isOwner }) => {
   if (!text) {
-    return conn.reply(m.chat, `*🍬 Inserisci il nome di un plugin (file) esistente*\n\n*—◉ Esempio*\n*◉ ${usedPrefix + command}* info-infobot\n\n*—◉ Lista dei plugin (file) esistenti:*\n*◉* ${ar1.map((v) => ' ' + v).join`\n*◉*`}`, m);
+    return conn.reply(
+      m.chat,
+      '📦 Usa:\n.pl <nome-plugin>\n\nEsempio:\n.pl deadlyxod',
+      m
+    )
   }
 
-  if (!ar1.includes(text)) {
-    return conn.reply(m.chat, `*🍭 Nessun plugin (file) trovato con il nome "${text}", inserisci un nome esistente*\n\n*==================================*\n\n*—◉ Lista dei plugin (file) esistenti:*\n*◉* ${ar1.map((v) => ' ' + v).join`\n*◉*`}`, m);
+  // se vuoi SOLO owner, lascia questo
+  if (!isOwner) {
+    return conn.reply(m.chat, '🔒 Solo il creatore può usare questo comando', m)
   }
 
-  let o;
-  try {
-    o = await exec('cat plugins/' + text + '.js');
-  } catch (e) {
-    o = e;
-  } finally {
-    const { stdout, stderr } = o;
-    if (stdout.trim()) {
-      await conn.sendMessage(m.chat, { document: fs.readFileSync(`./plugins/${text}.js`), mimetype: 'application/javascript', fileName: `${text}.js` }, { quoted: m });
-    }
-    if (stderr.trim()) {
-      await conn.sendMessage(m.chat, { document: fs.readFileSync(`./plugins/${text}.js`), mimetype: 'application/javascript', fileName: `${text}.js` }, { quoted: m });
-    }
+  let pluginName = text.endsWith('.js') ? text : text + '.js'
+  let pluginPath = path.join(__dirname, pluginName)
+
+  if (!fs.existsSync(pluginPath)) {
+    return conn.reply(m.chat, `❌ Plugin *${pluginName}* non trovato`, m)
   }
-};
 
-handler.help = ['getplugin'];
-handler.tags = ['creatore'];
-handler.command = ['getplugin', 'plugin'];
-handler.rowner = true;
+  let code = fs.readFileSync(pluginPath, 'utf-8')
 
-export default handler;
+  // limite messaggio WhatsApp (~65k)
+  if (code.length > 60000) {
+    return conn.reply(
+      m.chat,
+      '⚠️ Plugin troppo grande per essere inviato in un solo messaggio',
+      m
+    )
+  }
+
+  let msg = `
+📦 *PLUGIN:* ${pluginName}
+
+\`\`\`js
+${code}
+\`\`\`
+`.trim()
+
+  await conn.sendMessage(m.chat, { text: msg }, { quoted: m })
+}
+
+handler.help = ['pl']
+handler.tags = ['tools']
+handler.command = /^pl$/i
+handler.owner = true // togli se vuoi pubblico
+
+export default handler

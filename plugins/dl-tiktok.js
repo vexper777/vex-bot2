@@ -45,8 +45,8 @@ var handler = async (m, { conn, args, usedPrefix, command }) => {
             contextInfo: {
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
-                    newsletterJid: '120363418582531215@newsletter',
-                    newsletterName: "☾⋆⁺₊✧ 𝓿𝓪𝓻𝓮𝓫𝓸𝓽 ✧₊⁺⋆☽",
+                    newsletterJid: '',
+                    newsletterName: "√乇ﾒ乃のｲ // 𝚅𝚎𝚡-𝙱𝚘𝚝",
                     serverMessageId: -1
                 }
             }

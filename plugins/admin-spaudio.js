@@ -9,29 +9,25 @@ var handler = async (m, { conn, args, usedPrefix, command }) => {
     }
 
     try {
-        await conn.reply(m.chat, "⏳ Cerco il brano su Spotify + YouTube...", m)
+        await conn.reply(m.chat, "⏳ Convertendo Spotify in MP3...", m)
 
-        const api = `https://api.akuari.my.id/downloader/spotify?link=${encodeURIComponent(url)}`
+        const api = `https://spotifydl.info/api/convert?url=${encodeURIComponent(url)}`
         const res = await fetch(api)
         const json = await res.json()
 
-        if (!json.status || !json.result) {
+        if (!json.success) {
             return conn.reply(m.chat, "❌ Brano non trovato.", m)
         }
 
-        const data = json.result
-
-        const title = data.title
-        const artist = data.artist
-        const mp3 = data.audio
-
-        const caption = `🎵 *${title}*\n👤 ${artist}`
+        const title = json.metadata.title
+        const artist = json.metadata.artist
+        const mp3 = json.download.link
 
         await conn.sendMessage(m.chat, {
             audio: { url: mp3 },
             mimetype: "audio/mpeg",
             fileName: `${title}.mp3`,
-            caption: caption
+            caption: `🎵 *${title}*\n👤 ${artist}`
         }, { quoted: m })
 
     } catch (e) {

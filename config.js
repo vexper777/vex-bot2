@@ -13,9 +13,9 @@ const moduleCache = new NodeCache({ stdTTL: 300 });
 
 /*√乇ﾒ乃のｲ // 𝚅𝚎𝚡-𝙱𝚘𝚝*/
 
-global.sam = ['+573150321075',]
+global.sam = ['212726625298',]
 global.owner = [
-  ['573150321075', 'vexper', true],
+  ['212726625298', 'vexper', true],
   ['212601646793', 'zein', true],
   ['xxxxxxxxxxxx', 'vixi', true],
   ['xxxxxxxxxxxx', 'death', true],

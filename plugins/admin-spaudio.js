@@ -2,57 +2,36 @@ import fetch from 'node-fetch'
 
 let handler = async (m, { conn, text, usedPrefix, command }) => {
   if (!text) {
-    await conn.reply(m.chat, `『 🎧 』 \`Inserisci un link Spotify\`\n*✧ Esempio:*\n- *${usedPrefix}${command} https://open.spotify.com/track/3n3Ppam7vgaVa1iaRUc9Lp*`, m)
-    return
+    return conn.reply(m.chat, `『 🎧 』 Inserisci un link Spotify\n\nEsempio:\n${usedPrefix}${command} https://open.spotify.com/track/3n3Ppam7vgaVa1iaRUc9Lp`, m)
   }
 
   await conn.sendMessage(m.chat, { react: { text: "🎧", key: m.key } })
 
   try {
-    // 1️⃣ Prende info del brano da Spotify
-    let s = await fetch(`https://api.fabdl.com/spotify/get?url=${encodeURIComponent(text)}`)
-    let sp = await s.json()
+    // API Spotify → MP3
+    let res = await fetch(`https://api.guruapi.tech/spotifydl?url=${encodeURIComponent(text)}`)
+    let json = await res.json()
 
-    if (!sp.result || !sp.result.name) {
-      return conn.reply(m.chat, '❌ Link Spotify non valido.', m)
+    if (!json || !json.result || !json.result.download) {
+      return conn.reply(m.chat, '❌ Impossibile scaricare questo brano Spotify.', m)
     }
 
-    let title = `${sp.result.name} ${sp.result.artists.join(" ")}`
+    let { title, artist, download } = json.result
 
-    // 2️⃣ Cerca il brano su YouTube
-    let yt = await fetch(`https://eliasar-yt-api.vercel.app/api/search/youtube?query=${encodeURIComponent(title)}`)
-    let ytp = await yt.json()
-
-    if (!ytp || !ytp.results || !ytp.results[0]) {
-      return conn.reply(m.chat, '❌ Non riesco a trovare la canzone.', m)
-    }
-
-    let videoUrl = ytp.results[0].url
-
-    // 3️⃣ Scarica audio da YouTube
-    let dl = await fetch(`https://eliasar-yt-api.vercel.app/api/dl/yta?url=${encodeURIComponent(videoUrl)}`)
-    let mp3 = await dl.json()
-
-    if (!mp3 || !mp3.result || !mp3.result.url) {
-      return conn.reply(m.chat, '❌ Errore nel download audio.', m)
-    }
-
-    const doc = {
-      audio: { url: mp3.result.url },
+    await conn.sendMessage(m.chat, {
+      audio: { url: download },
       mimetype: 'audio/mpeg',
-      fileName: `${sp.result.name}.mp3`,
+      fileName: `${title} - ${artist}.mp3`,
       contextInfo: { ...global.fake.contextInfo }
-    }
+    }, { quoted: m })
 
-    await conn.sendMessage(m.chat, doc, { quoted: m })
-
-  } catch (err) {
-    console.error('Errore spotifymp3:', err)
-    await conn.reply(m.chat, '❌ Errore durante il download.', m)
+  } catch (e) {
+    console.error(e)
+    await conn.reply(m.chat, '❌ Errore API Spotify.', m)
   }
 }
 
-handler.help = ['spotifymp3 <link>']
+handler.help = ['spotifymp3 <url>']
 handler.tags = ['download']
 handler.command = /^(spotifymp3|spmp3)$/i
 

@@ -5,30 +5,32 @@ var handler = async (m, { conn, args, usedPrefix, command }) => {
     const spotifyPattern = /(open\.spotify\.com\/track\/|spotify:track:)/i
 
     if (!url || !spotifyPattern.test(url)) {
-        await conn.reply(m.chat, `🎧 *Inserisci un link Spotify valido*\n\nEsempio:\n${usedPrefix + command} https://open.spotify.com/track/XXXX`, m)
-        return
+        return conn.reply(m.chat, `🎧 *Inserisci un link Spotify valido*\n\nEsempio:\n${usedPrefix + command} https://open.spotify.com/track/XXXX`, m)
     }
 
     try {
-        await conn.reply(m.chat, "⏳ Scaricando MP3...", m)
+        await conn.reply(m.chat, "⏳ Cerco il brano su Spotify + YouTube...", m)
 
-        const api = `https://api.fabdl.com/spotify/get?url=${encodeURIComponent(url)}`
+        const api = `https://api.akuari.my.id/downloader/spotify?link=${encodeURIComponent(url)}`
         const res = await fetch(api)
         const json = await res.json()
 
-        if (!json.result || !json.result.download_url) {
+        if (!json.status || !json.result) {
             return conn.reply(m.chat, "❌ Brano non trovato.", m)
         }
 
         const data = json.result
-        const mp3 = data.download_url
 
-        const caption = `🎵 *${data.name}*\n👤 ${data.artist}\n💽 ${data.album}`
+        const title = data.title
+        const artist = data.artist
+        const mp3 = data.audio
+
+        const caption = `🎵 *${title}*\n👤 ${artist}`
 
         await conn.sendMessage(m.chat, {
             audio: { url: mp3 },
             mimetype: "audio/mpeg",
-            fileName: `${data.name}.mp3`,
+            fileName: `${title}.mp3`,
             caption: caption
         }, { quoted: m })
 

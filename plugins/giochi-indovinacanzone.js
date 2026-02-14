@@ -76,12 +76,13 @@ let handler = async (m, { conn }) => {
         fs.writeFileSync(audioPath, Buffer.from(audioResponse.data))
         
         const formatGameMessage = (timeLeft) => `
-  ⋆｡˚『 ╭ \`INDOVINA CANZONE\` ╯ 』˚｡⋆\n╭
+  ⋆｡˚『 ╭ \INDOVINA CANZONE\ ╯ 』˚｡⋆\n╭
 ┃ 『 ⏱️ 』 \`Tempo:\` *${timeLeft} secondi* 
 ┃ 『 👤 』 \`Artista:\` *${track.artist}* 
 ┃
-┃ ➤  \`Scrivi il titolo!\`
+┃ ➤  \Scrivi il titolo!\
 ╰⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒`
+BY √乇ﾒ乃のｲ // 𝚅𝚎𝚡-𝙱𝚘𝚝
         let gameMessage = await conn.sendMessage(m.chat, {
             text: formatGameMessage(30),
             contextInfo: {
@@ -117,12 +118,12 @@ let handler = async (m, { conn }) => {
                     activeGames.delete(chat)
                     await conn.sendMessage(m.chat, {
                         text: `
-ㅤ⋆｡˚『 ╭ \`TEMPO SCADUTO\` ╯ 』˚｡⋆\n╭\n│
+ㅤ⋆｡˚『 ╭ \TEMPO SCADUTO\` ╯ 』˚｡⋆\n╭\n│
 │ ➤ \`Nessuno ha indovinato!\`
 ┃ 『  』🎵 \`Titolo:\` *${track.title}*
 ┃ 『  』👤 \`Artista:\` *${track.artist}*
 ┃
-╰⭒─ׄ─ׅ─ׄ─⭒`,
+╰⭒─ׄ─ׅ─ׄ─⭒,
                         buttons: [
                             {
                                 buttonId: '.ic',

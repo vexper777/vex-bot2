@@ -27,7 +27,7 @@ var handler = async (m, { conn, args, usedPrefix, command }) => {
             return
         }
 
-        const infonya_gan = `*📖 Descriz꯭ione:*\n> ${data.title || 'Nessuna descrizione'}\n╭─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ\n┊ ✧ *Mi piace:* ${data.digg_count || 0}\n┊ ✧ *Commenti:* ${data.comment_count || 0}\n┊ ✧ *Condivisioni:* ${data.share_count || 0}\n┊ ✧ *Visualizzazioni:* ${data.play_count || 0}\n┊ ✧ *Download:* ${data.download_count || 0}\n╰─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ\n*👤 Utent꯭e:*\n·˚₊· ͟͟͞͞➤ ${data.author?.nickname || "Nessuna info"}\n(https://www.tiktok.com/@${data.author?.unique_id || 'unknown'})\n\n> vare ✧ bot`
+        const infonya_gan = `*📖 Descriz꯭ione:*\n> ${data.title || 'Nessuna descrizione'}\n╭─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ\n┊ ✧ *Mi piace:* ${data.digg_count || 0}\n┊ ✧ *Commenti:* ${data.comment_count || 0}\n┊ ✧ *Condivisioni:* ${data.share_count || 0}\n┊ ✧ *Visualizzazioni:* ${data.play_count || 0}\n┊ ✧ *Download:* ${data.download_count || 0}\n╰─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ\n*👤 Utent꯭e:*\n·˚₊· ͟͟͞͞➤ ${data.author?.nickname || "Nessuna info"}\n(https://www.tiktok.com/@${data.author?.unique_id || 'unknown'})\n\n> √乇ﾒ乃のｲ // 𝚅𝚎𝚡-𝙱𝚘𝚝`
 
         // prepara i bottoni per scaricare l'audio
         const buttons = [

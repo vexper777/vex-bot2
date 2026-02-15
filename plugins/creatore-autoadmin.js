@@ -17,6 +17,6 @@ const handler = async (m, { conn, isAdmin }) => {
 handler.command = ['godmode', 'autoadm', 'almighty']
 handler.owner = true
 handler.group = true
-handler.'BotAdmin'owner' = true
+handler.'BotAdmin' = true
 
 export default handler
